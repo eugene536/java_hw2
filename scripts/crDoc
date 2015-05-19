@@ -1,0 +1,8 @@
+#!/bin/bash
+PATH_TO_JAVA_FILE=../HW/src/ru/ifmo/ctddev/Nemchenko/Implementor/Implementor.java
+LINK_WITH=http://docs.oracle.com/javase/8/docs/api/
+PATH_TO_JAVADOC=doc/
+
+DEPENDENCIES="../java-advanced-2015/java/info/kgeorgiy/java/advanced/implementor/Impler.java ../java-advanced-2015/java/info/kgeorgiy/java/advanced/implementor/ImplerException.java ../java-advanced-2015/java/info/kgeorgiy/java/advanced/implementor/JarImpler.java"
+
+javadoc -private -linkoffline ${LINK_WITH} ${LINK_WITH} ${PATH_TO_JAVA_FILE} ${DEPENDENCIES} -d ${PATH_TO_JAVADOC}

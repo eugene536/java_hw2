@@ -1,0 +1,2 @@
+Main-Class: ru.ifmo.ctddev.Nemchenko.Implementor.Implementor
+Class-Path: /home/eugene/java/IdeaProjects/java-advanced-2015/artifacts/ImplementorTest.jar /home/eugene/java/IdeaProjects/HW/out/production/HW/

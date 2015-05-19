@@ -1,0 +1,13 @@
+#!/bin/bash
+PROJECT=Implementor
+PROJECT_PATH=../HW/out/production/HW/
+MY_CLASS=ru.ifmo.ctddev.Nemchenko.Implementor.Implementor
+LOG_FILE=log
+
+PACKAGE_TEST=info.kgeorgiy.java.advanced.implementor.Tester
+LEVEL_TEST=class
+ARTIFACTS=../java-advanced-2015/artifacts/ImplementorTest.jar
+LIBS=../java-advanced-2015/lib/*
+#:java-advanced-2015/java/
+java -cp "${ARTIFACTS}:${LIBS}:${PROJECT_PATH}" ${PACKAGE_TEST} ${LEVEL_TEST} ${MY_CLASS} 2> ${LOG_FILE}
+

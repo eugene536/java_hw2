@@ -1,0 +1,14 @@
+#!/bin/bash
+PROJECT=ParallelMapperImpl
+MY_CLASS=ru.ifmo.ctddev.Nemchenko.${PROJECT}.${PROJECT}
+PROJECT2=IterativeParallelism
+MY_CLASS2=ru.ifmo.ctddev.Nemchenko.${PROJECT2}.${PROJECT2}
+PROJECT_PATH=../HW/out/production/HW/
+LOG_FILE=log
+
+PACKAGE_TEST=info.kgeorgiy.java.advanced.mapper.Tester
+LEVEL_TEST=list
+ARTIFACTS=../java-advanced-2015/artifacts/ParallelMapperTest.jar
+LIBS=../java-advanced-2015/lib/*
+java -cp "${ARTIFACTS}:${LIBS}:${PROJECT_PATH}" ${PACKAGE_TEST} ${LEVEL_TEST} ${MY_CLASS},${MY_CLASS2} $@
+#2> ${LOG_FILE}

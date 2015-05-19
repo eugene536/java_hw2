@@ -1,0 +1,8 @@
+#!/bin/bash
+PATH_TO_JAVA_FILE=../HW/src/ru/ifmo/ctddev/Nemchenko/ParallelMapperImpl/ParallelMapperImpl.java
+LINK_WITH=http://docs.oracle.com/javase/8/docs/api/
+PATH_TO_JAVADOC=doc/
+
+DEPENDENCIES="../java-advanced-2015/java/info/kgeorgiy/java/advanced/mapper/ParallelMapper.java ../java-advanced-2015/java/info/kgeorgiy/java/advanced/concurrent/ListIP.java ../java-advanced-2015/java/info/kgeorgiy/java/advanced/concurrent/ScalarIP.java ../HW/src/ru/ifmo/ctddev/Nemchenko/ParallelMapperImpl/* ../HW/src/ru/ifmo/ctddev/Nemchenko/IterativeParallelism/*"
+
+javadoc -linkoffline ${LINK_WITH} ${LINK_WITH} ${PATH_TO_JAVA_FILE} ${DEPENDENCIES} -d ${PATH_TO_JAVADOC}

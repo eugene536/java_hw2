@@ -1,0 +1,4 @@
+#!/bin/bash
+MY_CLASS=/home/eugene/java/IdeaProjects/HW/out/production/HW/ru/ifmo/ctddev/Nemchenko/Implementor/Implementor.class
+
+jar cfmv main.jar Manifest.txt $MY_CLASS
