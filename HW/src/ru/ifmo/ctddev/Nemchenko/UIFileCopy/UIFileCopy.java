@@ -1,12 +1,10 @@
 package ru.ifmo.ctddev.Nemchenko.UIFileCopy;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.*;
 import java.text.DecimalFormat;
@@ -91,7 +89,11 @@ public class UIFileCopy extends JFrame {
         constraints.gridwidth = GridBagConstraints.RELATIVE;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 1;
-        panel.setBorder(BorderFactory.createLineBorder(Color.gray));
+
+        TitledBorder centerBorder = BorderFactory.createTitledBorder("Copying");
+        centerBorder.setTitleJustification(TitledBorder.LEFT);
+        panel.setBorder(centerBorder);
+
         getContentPane().add(panel, constraints);
     }
 
@@ -142,6 +144,11 @@ public class UIFileCopy extends JFrame {
         System.out.println("canceled");
         remainingTimeLabel.setText(REMAINING_TIME + "0 s");
         cancel.setText("close");
+
+        TitledBorder centerBorder = BorderFactory.createTitledBorder("Canceled");
+        centerBorder.setTitleJustification(TitledBorder.LEFT);
+        centerBorder.setTitleColor(Color.red);
+        panel.setBorder(centerBorder);
     }
 
     private void finishedCopying(CopyProperties properties) {
