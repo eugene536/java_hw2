@@ -17,6 +17,7 @@ public class CopyProperties {
     private boolean evaluatingTotalSize;
     private boolean canceled;
     private boolean finishedCopying;
+    private Exception error;
 
     private static final long KILOBYTE = 1024;
     private static final long MEGABYTE = 1024 * KILOBYTE;
@@ -150,5 +151,13 @@ public class CopyProperties {
 
     public void setCanceled(boolean canceled) {
         this.canceled = canceled;
+    }
+
+    public Exception getError() {
+        return error;
+    }
+
+    public void setError(Exception error) {
+        this.error = error;
     }
 }

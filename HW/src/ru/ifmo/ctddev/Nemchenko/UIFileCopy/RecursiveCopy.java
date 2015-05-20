@@ -1,7 +1,3 @@
-// TBD:
-// FileAlreadyExist
-// PermissionDenied
-
 package ru.ifmo.ctddev.Nemchenko.UIFileCopy;
 
 import javax.swing.*;
@@ -67,9 +63,8 @@ public class RecursiveCopy extends SwingWorker<CopyProperties, CopyProperties> i
                 }
             });
         } catch (IOException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-            cancel(true);
+            properties.setError(e);
+            publish(properties);
         }
 
     }
@@ -90,8 +85,8 @@ public class RecursiveCopy extends SwingWorker<CopyProperties, CopyProperties> i
         try {
             Files.walkFileTree(sourcePath, this);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
-            cancel(true);
+            properties.setError(e);
+            publish(properties);
         }
 
         return properties;
@@ -105,6 +100,13 @@ public class RecursiveCopy extends SwingWorker<CopyProperties, CopyProperties> i
      */
     @Override
     protected void process(List<CopyProperties> chunks) {
+        // if error occured
+        for (CopyProperties properties: chunks) {
+            if (properties.getError() != null) {
+                propertiesHandler.accept(properties);
+                cancel(true);
+            }
+        }
         CopyProperties properties = chunks.get(chunks.size() - 1);
         propertiesHandler.accept(properties);
     }
@@ -123,8 +125,8 @@ public class RecursiveCopy extends SwingWorker<CopyProperties, CopyProperties> i
             Path suffix = sourcePath.relativize(dir);
             Files.createDirectories(destinationPath.resolve(suffix));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            cancel(true);
+            properties.setError(e);
+            publish(properties);
         }
 
         return FileVisitResult.CONTINUE;
@@ -160,8 +162,8 @@ public class RecursiveCopy extends SwingWorker<CopyProperties, CopyProperties> i
             }
         } catch (IOException e) {
             if (isCancelled()) return FileVisitResult.TERMINATE;
-            System.out.println(e.getMessage());
-            cancel(true);
+            properties.setError(e);
+            publish(properties);
         }
 
         return FileVisitResult.CONTINUE;
@@ -196,8 +198,8 @@ public class RecursiveCopy extends SwingWorker<CopyProperties, CopyProperties> i
             timer.stop();
         } catch (Exception e) {
             if (!isCancelled()) {
-                System.out.println(e.getMessage());
-                cancel(true);
+                properties.setError(e);
+                publish(properties);
             }
         }
     }

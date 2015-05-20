@@ -2,6 +2,11 @@ package ru.ifmo.ctddev.Nemchenko.UIFileCopy;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.*;
 import java.text.DecimalFormat;
@@ -32,6 +37,7 @@ public class UIFileCopy extends JFrame {
     private JProgressBar progress;
     private JLabel totalSizeLabel;
     private JPanel panel;
+    private static JDialog dialog;
 
     /**
      * construct this UIFileCopy
@@ -48,18 +54,10 @@ public class UIFileCopy extends JFrame {
                 | UnsupportedLookAndFeelException | IllegalAccessException e) {
             // ignore
         }
-        constraints = new GridBagConstraints();
-        panel = new JPanel(new GridBagLayout());
-        constraints.gridwidth = GridBagConstraints.RELATIVE;
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 1;
-        constraints.weighty = 1;
-        getContentPane().add(panel, constraints);
 
-        panel.setBorder(BorderFactory.createLineBorder(Color.gray));
+        createPanel();
 
         constraints = new GridBagConstraints();
-
         createProgress();
 
         constraints.insets = new Insets(10, 10, 10, 50);
@@ -82,8 +80,19 @@ public class UIFileCopy extends JFrame {
         setVisible(true);
 
         RecursiveCopy recursiveCopy = new RecursiveCopy(this::propertiesHandler, sourcePath, destinationPath);
-        cancel.addActionListener(recursiveCopy);
         cancel.setActionCommand("cancel");
+        cancel.addActionListener(recursiveCopy);
+    }
+
+    private void createPanel() {
+        GridBagConstraints constraints = new GridBagConstraints();
+        panel = new JPanel(new GridBagLayout());
+        constraints = new GridBagConstraints();
+        constraints.gridwidth = GridBagConstraints.RELATIVE;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 1;
+        panel.setBorder(BorderFactory.createLineBorder(Color.gray));
+        getContentPane().add(panel, constraints);
     }
 
     private JLabel createLabel(String text, int gridx, int gridy) {
@@ -146,6 +155,7 @@ public class UIFileCopy extends JFrame {
     }
 
     private void propertiesHandler(CopyProperties properties) {
+        if (dialog != null && dialog.isVisible()) return;
         boolean first_pack = false;
 
         if (properties.isFinishedCopying()) {
@@ -153,6 +163,13 @@ public class UIFileCopy extends JFrame {
             return;
         } else if (properties.isCanceled()) {
             canceledCopying();
+            return;
+        } else if (properties.getError() != null) { // something go wrong, =(
+            if (properties.getError() instanceof AccessDeniedException) {
+                showErrorDialog("Access denied: " + properties.getError().getMessage(), this);
+            } else {
+                showErrorDialog(properties.getError().getMessage(), this);
+            }
             return;
         }
 
@@ -196,6 +213,33 @@ public class UIFileCopy extends JFrame {
         properties.setLastCopiedBytes(0);
     }
 
+    private static void showErrorDialog(String message, JFrame frame) {
+        JOptionPane optionPane = new JOptionPane(message, JOptionPane.ERROR_MESSAGE);
+        if (dialog != null && dialog.isVisible()) return;
+        dialog = new JDialog(frame, "Click a button", true);
+
+        dialog.setContentPane(optionPane);
+        dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+
+        dialog.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                System.exit(0);
+            }
+        });
+
+        optionPane.addPropertyChangeListener(e -> {
+            String prop = e.getPropertyName();
+
+            if (dialog.isVisible() && (e.getSource() == optionPane)
+                    && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
+                System.exit(0);
+            }
+        });
+        dialog.setLocationRelativeTo(null);
+        dialog.pack();
+        dialog.setVisible(true);
+    }
+
     public static void main(String[] args) {
         if (args == null || args.length != 2 || args[0] == null || args[1] == null) {
             System.out.println("usage: <source location> <destination location>");
@@ -205,35 +249,55 @@ public class UIFileCopy extends JFrame {
         destinationPath = null;
 
         try {
-            sourcePath = Paths.get(args[0]).toRealPath();
-            destinationPath = Paths.get(args[1]).toRealPath();
+            sourcePath = Paths.get(args[0]);
+            destinationPath = Paths.get(args[1]);
 
             if (!Files.exists(sourcePath, LinkOption.NOFOLLOW_LINKS)) {
-                System.out.println("can't find file: " + sourcePath);
-                return;
-            } else if (sourcePath.compareTo(destinationPath) == 0) {
-                System.out.println("you cannot copy file into itself");
+                showError("can't find file: " + sourcePath);
                 return;
             }
+
+            if (Files.exists(destinationPath)) {
+                if (checkSubdirectory(destinationPath.toRealPath(), sourcePath.toRealPath())) {
+                    showError("you cannot copy file into itself");
+                    return;
+                }
+            }
         } catch (InvalidPathException ex) {
-            System.out.println("Bad path: [" + ex.getInput() + "]");
+            showError("Bad path: [" + ex.getInput() + "]");
             return;
         } catch (IOException e) {
-            System.out.println(e.getMessage());
-            return;
+            //ignore
         }
 
         if (Files.isDirectory(sourcePath)) {
             destinationPath = destinationPath.resolve(sourcePath.getFileName());
         }
+
         try {
             Files.createDirectories(destinationPath.getParent());
         } catch (IOException e) {
-            e.printStackTrace();
+            showError("Bad path: [" + e.getMessage() + "]");
         }
-        System.out.println(destinationPath);
+
 
         SwingUtilities.invokeLater(UIFileCopy::new);
+    }
+
+    private static void showError(String message) {
+        SwingUtilities.invokeLater(() -> showErrorDialog(message, null));
+    }
+
+    private static boolean checkSubdirectory(Path destinationPath, Path sourcePath) {
+        if (destinationPath == null || sourcePath == null) {
+            return false;
+        }
+
+        if (destinationPath.compareTo(sourcePath) == 0) {
+            return true;
+        }
+
+        return checkSubdirectory(destinationPath.getParent(), sourcePath);
     }
 
 }
