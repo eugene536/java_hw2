@@ -1,6 +1,7 @@
 package ru.ifmo.ctddev.Nemchenko.HelloUDP;
 
 import com.sun.jndi.toolkit.url.Uri;
+import info.kgeorgiy.java.advanced.hello.HelloServer;
 
 import java.io.IOException;
 import java.net.*;
@@ -9,7 +10,7 @@ import java.util.concurrent.*;
 /**
  * Created by eugene on 2015/05/05.
  */
-public class HelloUDPServer {
+public class HelloUDPServer implements HelloServer {
     public static int portNumber;
     public static int cntWorkingThreads;
     public static Integer id = 0;
@@ -56,5 +57,15 @@ public class HelloUDPServer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void start(int port, int threads) {
+
+    }
+
+    @Override
+    public void close() {
+
     }
 }

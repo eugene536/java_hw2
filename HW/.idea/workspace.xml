@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b9d99c9-0b04-428d-ae94-155b57b411e9" name="Default" comment="start doing 7 hw">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/UIFileCopy.java" afterPath="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/UIFileCopy.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/hamcrest_core_1_3.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/jlfgr_1_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/jlfgr_1_01.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/ArraySetTest.xml" afterPath="$PROJECT_DIR$/.idea/libraries/ArraySetTest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/HW.iml" afterPath="$PROJECT_DIR$/HW.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPClient.java" afterPath="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPClient.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPServer.java" afterPath="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPServer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="HW.iws" />
@@ -34,40 +40,36 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="UIFileCopy.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/UIFileCopy.java">
+      <file leaf-file-name="HelloUDPClient.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45652175">
-              <caret line="292" column="0" selection-start-line="292" selection-start-column="0" selection-end-line="292" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.5869565">
+              <caret line="50" column="46" selection-start-line="50" selection-start-column="46" selection-end-line="50" selection-end-column="46" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#469#470#0" expanded="true" />
+                <element signature="e#534#535#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CopyProperties.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/CopyProperties.java">
+      <file leaf-file-name="Util.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/../java-advanced-2015/artifacts/HelloUDPTest.jar!/info/kgeorgiy/java/advanced/hello/Util.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="162" column="0" selection-start-line="162" selection-start-column="0" selection-end-line="162" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#4368#4369#0" expanded="true" />
-                <element signature="e#4396#4397#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="-0.51724136">
+              <caret line="76" column="45" selection-start-line="76" selection-start-column="45" selection-end-line="76" selection-end-column="45" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RecursiveCopy.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/RecursiveCopy.java">
+      <file leaf-file-name="HelloUDPServer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPServer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="220" column="26" selection-start-line="220" selection-start-column="26" selection-end-line="220" selection-end-column="26" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+              <caret line="35" column="20" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="20" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -109,8 +111,6 @@
         <option value="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/ParallelMapperImpl/RunTask.java" />
         <option value="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/ParallelMapperImpl/MyBlockingQueue.java" />
         <option value="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/WebCrawler/Main.java" />
-        <option value="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPClient.java" />
-        <option value="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPServer.java" />
         <option value="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/FileVisitor.java" />
         <option value="$PROJECT_DIR$/temp.txt" />
         <option value="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/button.form" />
@@ -130,6 +130,8 @@
         <option value="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/CopyProperties.java" />
         <option value="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/RecursiveCopy.java" />
         <option value="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/UIFileCopy.java" />
+        <option value="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPServer.java" />
+        <option value="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPClient.java" />
       </list>
     </option>
   </component>
@@ -143,6 +145,9 @@
         <option name="mavenHome" value="Bundled (Maven 3)" />
       </MavenGeneralSettings>
     </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState />
   </component>
   <component name="NamedScopeManager">
     <order />
@@ -194,9 +199,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Production" />
-      </pane>
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -216,10 +218,67 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HW" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HW" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HW" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HW" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Nemchenko" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HW" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HW" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Nemchenko" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HelloUDP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane">
         <subPane />
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Production" />
       </pane>
     </panes>
   </component>
@@ -230,7 +289,7 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../java-advanced-2015/lib/quickcheck-0.6.jar!/" />
     <property name="options.lastSelected" value="project.propCompiler" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
@@ -264,27 +323,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
-  <component name="RunManager" selected="Application.UIFileCopy">
-    <configuration default="false" name="LayoutDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="swing.layout.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="swing.layout.LayoutDemo" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="HW" />
-      <envs />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Application.HelloUDPClient">
     <configuration default="false" name="ButtonDemo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -353,6 +392,26 @@
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="HW" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="HelloUDPClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="ru.ifmo.ctddev.Nemchenko.HelloUDP.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="ru.ifmo.ctddev.Nemchenko.HelloUDP.HelloUDPClient" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
@@ -613,19 +672,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Application.LayoutDemo" />
-      <item index="1" class="java.lang.String" itemvalue="Application.ButtonDemo" />
-      <item index="2" class="java.lang.String" itemvalue="Application.ActionDemo" />
-      <item index="3" class="java.lang.String" itemvalue="Application.Derived" />
-      <item index="4" class="java.lang.String" itemvalue="Application.UIFileCopy" />
+      <item index="0" class="java.lang.String" itemvalue="Application.ButtonDemo" />
+      <item index="1" class="java.lang.String" itemvalue="Application.ActionDemo" />
+      <item index="2" class="java.lang.String" itemvalue="Application.Derived" />
+      <item index="3" class="java.lang.String" itemvalue="Application.UIFileCopy" />
+      <item index="4" class="java.lang.String" itemvalue="Application.HelloUDPClient" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.UIFileCopy" />
-        <item index="1" class="java.lang.String" itemvalue="Application.Derived" />
-        <item index="2" class="java.lang.String" itemvalue="Application.ActionDemo" />
-        <item index="3" class="java.lang.String" itemvalue="Application.ButtonDemo" />
-        <item index="4" class="java.lang.String" itemvalue="Application.LayoutDemo" />
+        <item index="0" class="java.lang.String" itemvalue="Application.HelloUDPClient" />
+        <item index="1" class="java.lang.String" itemvalue="Application.UIFileCopy" />
+        <item index="2" class="java.lang.String" itemvalue="Application.Derived" />
+        <item index="3" class="java.lang.String" itemvalue="Application.ActionDemo" />
+        <item index="4" class="java.lang.String" itemvalue="Application.ButtonDemo" />
       </list>
     </recent_temporary>
   </component>
@@ -646,6 +705,7 @@
       <workItem from="1432101053523" duration="8827000" />
       <workItem from="1432131752812" duration="81000" />
       <workItem from="1432132047859" duration="738000" />
+      <workItem from="1432133036666" duration="11820000" />
     </task>
     <task id="LOCAL-00001" summary="fixed dependencies">
       <created>1427348593152</created>
@@ -669,7 +729,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44211000" />
+    <option name="totallyTimeSpent" value="56031000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -682,7 +742,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="24" width="1366" height="744" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32786885" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -690,12 +750,12 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329429" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32786885" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26974666" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26974666" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32786885" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25036603" sideWeight="0.49329358" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25036603" sideWeight="0.49329358" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -742,34 +802,12 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/CopyProperties.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="39" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4368#4369#0" expanded="true" />
-            <element signature="e#4396#4397#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/RecursiveCopy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="245" column="25" selection-start-line="245" selection-start-column="25" selection-end-line="245" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/UIFileCopy.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -942,20 +980,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35101405">
-          <caret line="33" column="45" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18096724">
-          <caret line="26" column="22" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/HW.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1089,9 +1113,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/UIFileCopy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4851794">
+          <caret line="292" column="0" selection-start-line="292" selection-start-column="0" selection-end-line="292" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/CopyProperties.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.83619344">
+          <caret line="162" column="0" selection-start-line="162" selection-start-column="0" selection-end-line="162" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/RecursiveCopy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.625585">
           <caret line="220" column="26" selection-start-line="220" selection-start-column="26" selection-end-line="220" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1099,24 +1143,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/CopyProperties.java">
+    <entry file="jar://$PROJECT_DIR$/../java-advanced-2015/artifacts/HelloUDPTest.jar!/info/kgeorgiy/java/advanced/hello/HelloClient.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="162" column="0" selection-start-line="162" selection-start-column="0" selection-end-line="162" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4368#4369#0" expanded="true" />
-            <element signature="e#4396#4397#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-2.586207">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/UIFileCopy/UIFileCopy.java">
+    <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45652175">
-          <caret line="292" column="0" selection-start-line="292" selection-start-column="0" selection-end-line="292" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="35" column="20" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../java-advanced-2015/artifacts/HelloUDPTest.jar!/info/kgeorgiy/java/advanced/hello/Util.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.51724136">
+          <caret line="76" column="45" selection-start-line="76" selection-start-column="45" selection-end-line="76" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5869565">
+          <caret line="50" column="46" selection-start-line="50" selection-start-column="46" selection-end-line="50" selection-end-column="46" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#469#470#0" expanded="true" />
+            <element signature="e#534#535#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1197,7 +1255,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>ArraySetTest</last-edited>
+          <last-edited>hamcrest-core-1.3</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
