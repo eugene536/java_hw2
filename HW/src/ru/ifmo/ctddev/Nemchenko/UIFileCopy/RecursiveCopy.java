@@ -1,12 +1,6 @@
 // TBD:
-// update ui properly, when resizing
-// copy small files
-// NoSuchFileException
 // FileAlreadyExist
 // PermissionDenied
-// javaDoc
-// recursion =(
-// FileSystemException: /home/eugene/java/IdeaProjects/HW/destination/./destination/de
 
 package ru.ifmo.ctddev.Nemchenko.UIFileCopy;
 
@@ -19,6 +13,12 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * Class to perform copy files with updating GUI.
+ * You have to pass handler which will be invoked on the event dispatching thread and
+ * handled {@code CopyProperties} object, which contains all needed information
+ * about current copy state.
+ */
 public class RecursiveCopy extends SwingWorker<CopyProperties, CopyProperties> implements FileVisitor<Path>, ActionListener {
     private static final int MAX_BUF_SIZE = 1024 * 1024;
     private byte buf[];
@@ -26,14 +26,18 @@ public class RecursiveCopy extends SwingWorker<CopyProperties, CopyProperties> i
     private Path sourcePath;
     private Path destinationPath;
 
-    public long startTime;
     private final CopyProperties properties = new CopyProperties();
     private Consumer<CopyProperties> propertiesHandler;
     private Timer timer;
 
+    /**
+     * construct this RecursiveCopy
+     * @param propertiesHandler handler which will be invoked when state changed
+     * @param sourcePath target path to folder or file which will be copied to {@code destinationPath}
+     * @param destinationPath destination path to folder or file
+     */
     public RecursiveCopy(Consumer<CopyProperties> propertiesHandler, Path sourcePath, Path destinationPath) {
         buf = new byte[MAX_BUF_SIZE];
-        startTime = System.currentTimeMillis();
         this.propertiesHandler = propertiesHandler;
         this.sourcePath = sourcePath;
         this.destinationPath = destinationPath;
@@ -43,55 +47,96 @@ public class RecursiveCopy extends SwingWorker<CopyProperties, CopyProperties> i
         execute();
     }
 
-    private void getTotalSize() throws IOException {
+    private void getTotalSize() {
         System.out.println(sourcePath);
-        Files.walkFileTree(sourcePath, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-                if (isCancelled()) return FileVisitResult.TERMINATE;
-                properties.setTotalBytes(properties.getTotalBytes() + attrs.size());
-                publish(properties);
-                return FileVisitResult.CONTINUE;
-            }
-        });
+        try {
+            Files.walkFileTree(sourcePath, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                    if (isCancelled()) return FileVisitResult.TERMINATE;
+                    properties.setTotalBytes(properties.getTotalBytes() + attrs.size());
+                    publish(properties);
+                    return FileVisitResult.CONTINUE;
+                }
+
+                @Override
+                public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                    System.out.println("failed: " + file);
+                    exc.printStackTrace();
+                    return super.visitFileFailed(file, exc);
+                }
+            });
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            cancel(true);
+        }
 
     }
 
+    /**
+     * Invoked on the working thread, and do copy of files.
+     * Invokes {@code handleProperties} every time when copy state changed.
+     *
+     * @return copy state
+     */
     @Override
-    protected CopyProperties doInBackground() throws Exception {
+    protected CopyProperties doInBackground() {
         properties.setStartTime(System.currentTimeMillis());
         properties.setEvaluatingTotalSize(true);
         getTotalSize();
         properties.setEvaluatingTotalSize(false);
 
-        Files.walkFileTree(sourcePath, this);
+        try {
+            Files.walkFileTree(sourcePath, this);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            cancel(true);
+        }
 
         return properties;
     }
 
 
+    /**
+     * Updates GUI with changed copy state.
+     *
+     * @param chunks list of copy states, used only last entry.
+     */
     @Override
     protected void process(List<CopyProperties> chunks) {
         CopyProperties properties = chunks.get(chunks.size() - 1);
         propertiesHandler.accept(properties);
     }
 
+    /**
+     * Invoked for a directory before entries in the directory are visited
+     * and creates these directories.
+     *
+     * @param   dir a reference to the directory
+     * @param   attrs the directory's basic attributes
+     * @return  the visit result
+     */
     @Override
     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
         try {
             Path suffix = sourcePath.relativize(dir);
             Files.createDirectories(destinationPath.resolve(suffix));
-        } catch (FileAlreadyExistsException e) {
-            e.printStackTrace();
-            // ignoring
         } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(0);
+            System.out.println(e.getMessage());
+            cancel(true);
         }
 
         return FileVisitResult.CONTINUE;
     }
 
+    /**
+     * Invoked for a file and do copy of it with update GUI invoking {@code handleProperties}
+     *
+     * @param file target file which will be copied
+     * @param attrs the file's basic attributes
+     * @return  the visit result
+     */
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
         Path suffix = sourcePath.relativize(file);
@@ -115,22 +160,33 @@ public class RecursiveCopy extends SwingWorker<CopyProperties, CopyProperties> i
             }
         } catch (IOException e) {
             if (isCancelled()) return FileVisitResult.TERMINATE;
+            System.out.println(e.getMessage());
+            cancel(true);
         }
 
         return FileVisitResult.CONTINUE;
     }
 
     @Override
-    public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-        exc.printStackTrace();
-        return FileVisitResult.CONTINUE;
+    public FileVisitResult visitFileFailed(Path file, IOException exc) {
+        if (exc.getCause() != null) {
+            System.out.println(exc.getCause().getMessage());
+        } else {
+            System.out.println(exc.getMessage());
+        }
+        cancel(true);
+        return FileVisitResult.TERMINATE;
     }
 
     @Override
-    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+    public FileVisitResult postVisitDirectory(Path dir, IOException exc) {
         return FileVisitResult.CONTINUE;
     }
 
+    /**
+     * Invoked when copy of files finished.
+     * Perform {@code propertiesHandler} with finished flag and stops timer.
+     */
     @Override
     protected void done() {
         try {
@@ -140,16 +196,29 @@ public class RecursiveCopy extends SwingWorker<CopyProperties, CopyProperties> i
             timer.stop();
         } catch (Exception e) {
             if (!isCancelled()) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
+                cancel(true);
             }
         }
     }
 
+    /**
+     * Invoked every second or when cancel button was pressed.
+     * Perform {@code propertiesHandler} and pass current copy state to it.
+     *
+     * @param e for check what kind of event occurred
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("cancel".equals(e.getActionCommand())) {
-            cancel(true);
-            timer.stop();
+            if (isDone() || isCancelled()) {
+                System.exit(0);
+            } else {
+                cancel(true);
+                timer.stop();
+                properties.setCanceled(true);
+                propertiesHandler.accept(properties);
+            }
         } else {
             synchronized (properties) {
                 propertiesHandler.accept(properties);

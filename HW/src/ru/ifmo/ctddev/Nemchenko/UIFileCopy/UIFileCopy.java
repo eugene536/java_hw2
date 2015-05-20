@@ -2,24 +2,27 @@ package ru.ifmo.ctddev.Nemchenko.UIFileCopy;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.nio.file.*;
 import java.text.DecimalFormat;
 
 import static ru.ifmo.ctddev.Nemchenko.UIFileCopy.CopyProperties.*;
 
 /**
- * Created by eugene on 2015/05/11.
+ * Class to create GUI and to do copy of files or folders
+ * with showing progress and updating copy state.
+ * You must pass source path and destination in arguments of program.
  */
 public class UIFileCopy extends JFrame {
     private static Path sourcePath;
     private static Path destinationPath;
     private GridBagConstraints constraints;
 
-    public static final String AVERAGE_SPEED = "Average speed: ";
-    public static final String EXPIRED_TIME = "Expired time: ";
-    public static final String REMAINING_TIME = "Remaining time: ";
-    public static final String CANCEL = "cancel";
-    public static final String CURRENT_SPEED = "Current speed: ";
+    private static final String AVERAGE_SPEED = "Average speed: ";
+    private static final String EXPIRED_TIME = "Expired time: ";
+    private static final String REMAINING_TIME = "Remaining time: ";
+    private static final String CANCEL = "cancel";
+    private static final String CURRENT_SPEED = "Current speed: ";
 
     private JButton cancel;
     private JLabel expiredTimeLabel;
@@ -28,15 +31,33 @@ public class UIFileCopy extends JFrame {
     private JLabel averageSpeedLabel;
     private JProgressBar progress;
     private JLabel totalSizeLabel;
+    private JPanel panel;
 
-    private RecursiveCopy recursiveCopy;
-
+    /**
+     * construct this UIFileCopy
+     */
     UIFileCopy() {
         super("File copy utility");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);  // window will be showed on the center
         getContentPane().setLayout(new GridBagLayout());
         setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException
+                | UnsupportedLookAndFeelException | IllegalAccessException e) {
+            // ignore
+        }
+        constraints = new GridBagConstraints();
+        panel = new JPanel(new GridBagLayout());
+        constraints.gridwidth = GridBagConstraints.RELATIVE;
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 1;
+        constraints.weighty = 1;
+        getContentPane().add(panel, constraints);
+
+        panel.setBorder(BorderFactory.createLineBorder(Color.gray));
+
         constraints = new GridBagConstraints();
 
         createProgress();
@@ -56,10 +77,11 @@ public class UIFileCopy extends JFrame {
         setLabelsVisibility(false);
 
         createCancelButton();
+
         pack();
         setVisible(true);
 
-        recursiveCopy = new RecursiveCopy(this::propertiesHandler, sourcePath, destinationPath);
+        RecursiveCopy recursiveCopy = new RecursiveCopy(this::propertiesHandler, sourcePath, destinationPath);
         cancel.addActionListener(recursiveCopy);
         cancel.setActionCommand("cancel");
     }
@@ -70,7 +92,7 @@ public class UIFileCopy extends JFrame {
         constraints.fill = GridBagConstraints.NONE;
         constraints.gridx = gridx;
         constraints.gridy = gridy;
-        getContentPane().add(label, constraints);
+        panel.add(label, constraints);
         return label;
     }
 
@@ -83,12 +105,11 @@ public class UIFileCopy extends JFrame {
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.insets = new Insets(10, 10, 10, 10);
-        constraints.weighty = 0.5;
         constraints.weightx = 0.5;
         constraints.gridwidth = 2;
         constraints.gridx = 0;
         constraints.gridy = 1;
-        getContentPane().add(progress, constraints);
+        panel.add(progress, constraints);
     }
 
     private void createCancelButton() {
@@ -96,22 +117,29 @@ public class UIFileCopy extends JFrame {
         constraints.anchor = GridBagConstraints.LAST_LINE_END;
         constraints.gridx = 1;
         constraints.gridy = 4;
-        getContentPane().add(cancel, constraints);
+        constraints.weightx = 0;
+        constraints.insets = new Insets(5, 5, 5, 5);
+        panel.add(cancel, constraints);
     }
 
-    public void setLabelsVisibility(boolean visible) {
+    private void setLabelsVisibility(boolean visible) {
         currentSpeedLabel.setVisible(visible);
         averageSpeedLabel.setVisible(visible);
         expiredTimeLabel.setVisible(visible);
         remainingTimeLabel.setVisible(visible);
     }
 
-    private void finishedCopiyng(CopyProperties properties) {
-        DecimalFormat outFormat = new DecimalFormat("#0.0");
-        progress.setValue(100);
+    private void canceledCopying() {
+        System.out.println("canceled");
         remainingTimeLabel.setText(REMAINING_TIME + "0 s");
+        cancel.setText("close");
+    }
+
+    private void finishedCopying(CopyProperties properties) {
+        canceledCopying();
+        progress.setValue(100);
         assert properties != null;
-        totalSizeLabel.setText(byteToString(properties.getCopiedBytes()) + "/" + byteToString(properties.getTotalBytes()));
+        totalSizeLabel.setText(byteToString(properties.getTotalBytes()) + "/" + byteToString(properties.getTotalBytes()));
 
         double expiredTime = milliToSeconds(System.currentTimeMillis() - properties.getStartTime());
         expiredTimeLabel.setText(EXPIRED_TIME + getTimeFormat((long) (expiredTime * 1000)));
@@ -121,7 +149,10 @@ public class UIFileCopy extends JFrame {
         boolean first_pack = false;
 
         if (properties.isFinishedCopying()) {
-            finishedCopiyng(properties);
+            finishedCopying(properties);
+            return;
+        } else if (properties.isCanceled()) {
+            canceledCopying();
             return;
         }
 
@@ -174,14 +205,31 @@ public class UIFileCopy extends JFrame {
         destinationPath = null;
 
         try {
-            sourcePath = Paths.get(args[0]);
-            destinationPath = Paths.get(args[1]);
+            sourcePath = Paths.get(args[0]).toRealPath();
+            destinationPath = Paths.get(args[1]).toRealPath();
+
+            if (!Files.exists(sourcePath, LinkOption.NOFOLLOW_LINKS)) {
+                System.out.println("can't find file: " + sourcePath);
+                return;
+            } else if (sourcePath.compareTo(destinationPath) == 0) {
+                System.out.println("you cannot copy file into itself");
+                return;
+            }
         } catch (InvalidPathException ex) {
             System.out.println("Bad path: [" + ex.getInput() + "]");
             return;
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return;
         }
+
         if (Files.isDirectory(sourcePath)) {
             destinationPath = destinationPath.resolve(sourcePath.getFileName());
+        }
+        try {
+            Files.createDirectories(destinationPath.getParent());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         System.out.println(destinationPath);
 

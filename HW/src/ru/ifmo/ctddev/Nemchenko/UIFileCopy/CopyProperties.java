@@ -5,7 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by eugene on 2015/05/14.
+ * Class stores information about copy state
+ * and contain some static methods for converting various quantities to human readable format.
  */
 public class CopyProperties {
     private long copiedBytes;
@@ -14,21 +15,20 @@ public class CopyProperties {
     private long startTime;
     private long lastTime;
     private boolean evaluatingTotalSize;
+    private boolean canceled;
     private boolean finishedCopying;
 
-    public static final long KILOBYTE = 1024;
-    public static final long MEGABYTE = 1024 * KILOBYTE;
-    public static final long GIGABYTE = 1024 * MEGABYTE;
+    private static final long KILOBYTE = 1024;
+    private static final long MEGABYTE = 1024 * KILOBYTE;
+    private static final long GIGABYTE = 1024 * MEGABYTE;
 
-    public static final long SECONDS = 1000;
-    public static final long HALF_SECOND = SECONDS / 2;
-    public static final long MINUTE = SECONDS * 60;
-    public static final long HOUR = MINUTE * 60;
-
-    private static DecimalFormat outFormat = new DecimalFormat("#0.0");
+    private static final long SECONDS = 1000;
+    private static final long MINUTE = SECONDS * 60;
+    private static final long HOUR = MINUTE * 60;
 
     /**
      * Returns human readable representation of {@code bytes}.
+     *
      * @param bytes target bytes
      * @return human readable representation of {@code bytes}
      */
@@ -50,6 +50,7 @@ public class CopyProperties {
 
     /**
      * Returns human readable representation of {@code time}
+     *
      * @param time target time in milliseconds
      * @return string representation of time
      */
@@ -65,6 +66,7 @@ public class CopyProperties {
 
     /**
      * Converts bytes to megabytes
+     *
      * @param bytes target bytes
      * @return megabytes = bytes / 2 ^ 20
      */
@@ -78,6 +80,7 @@ public class CopyProperties {
 
     /**
      * Converts milliseconds to seconds
+     *
      * @param milli target milli seconds
      * @return seconds = milli / 1000
      */
@@ -139,5 +142,13 @@ public class CopyProperties {
 
     public void setFinishedCopying(boolean finishedCopying) {
         this.finishedCopying = finishedCopying;
+    }
+
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
     }
 }
