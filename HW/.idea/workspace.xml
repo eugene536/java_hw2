@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b9d99c9-0b04-428d-ae94-155b57b411e9" name="Default" comment="start doing 7 hw">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/hamcrest_core_1_3.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/jlfgr_1_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/jlfgr_1_01.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/ArraySetTest.xml" afterPath="$PROJECT_DIR$/.idea/libraries/ArraySetTest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/HW.iml" afterPath="$PROJECT_DIR$/HW.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPClient.java" afterPath="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPServer.java" afterPath="$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPServer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="HW.iws" />
@@ -43,12 +37,11 @@
       <file leaf-file-name="HelloUDPClient.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5869565">
-              <caret line="50" column="46" selection-start-line="50" selection-start-column="46" selection-end-line="50" selection-end-column="46" />
+            <state vertical-scroll-proportion="0.6195652">
+              <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#469#470#0" expanded="true" />
-                <element signature="e#534#535#0" expanded="true" />
+                <element signature="e#1320#1328#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -705,7 +698,7 @@
       <workItem from="1432101053523" duration="8827000" />
       <workItem from="1432131752812" duration="81000" />
       <workItem from="1432132047859" duration="738000" />
-      <workItem from="1432133036666" duration="11820000" />
+      <workItem from="1432133036666" duration="12097000" />
     </task>
     <task id="LOCAL-00001" summary="fixed dependencies">
       <created>1427348593152</created>
@@ -729,7 +722,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56031000" />
+    <option name="totallyTimeSpent" value="56308000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1169,12 +1162,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/ifmo/ctddev/Nemchenko/HelloUDP/HelloUDPClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5869565">
-          <caret line="50" column="46" selection-start-line="50" selection-start-column="46" selection-end-line="50" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.6195652">
+          <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#469#470#0" expanded="true" />
-            <element signature="e#534#535#0" expanded="true" />
+            <element signature="e#1320#1328#0" expanded="true" />
           </folding>
         </state>
       </provider>

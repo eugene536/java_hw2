@@ -7,18 +7,12 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import java.io.IOException;
 import java.net.*;
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Created by eugene on 2015/05/05.
  */
 public class HelloUDPClient implements HelloClient {
-    private ExecutorService executorService;
-
-    public HelloUDPClient() {
-        executorService = Executors.newCachedThreadPool();
-    }
-
     public static void main(String... args) {
         if (args.length < 5) {
             System.out.println("usage: name/ip of server, port number, prefix, count of threads, count of queries");
@@ -43,12 +37,16 @@ public class HelloUDPClient implements HelloClient {
             return;
         }
 
+        ArrayList<Thread> threadsList = new ArrayList<Thread>();
         for (int i = 0; i < threads; i++) {
-            executorService.submit(new SendTask(i, port, serverInet, requests, prefix));
+            threadsList.add(new Thread(new SendTask(i, port, serverInet, requests, prefix)));
+            threadsList.get(threadsList.size() - 1).start();
         }
 
         try {
-            executorService.awaitTermination(10, TimeUnit.SECONDS);
+            for (Thread thread : threadsList) {
+                thread.join();
+            }
         } catch (InterruptedException e) {
             // ignore
         }
@@ -80,7 +78,7 @@ public class HelloUDPClient implements HelloClient {
                         clientSocket.send(packet);
                         clientSocket.setSoTimeout(10);
 
-                        byte buf[] = new byte[request.length() + 20];
+                        byte buf[] = new byte[request.length() + 50];
                         DatagramPacket receivePacket = new DatagramPacket(buf, buf.length);
                         clientSocket.receive(receivePacket);
 
@@ -89,6 +87,8 @@ public class HelloUDPClient implements HelloClient {
                             i++;
                         }
                     }
+                } catch (SocketTimeoutException e) {
+                    // ignoring
                 } catch (IOException e) {
                     // ignoring
                 }
