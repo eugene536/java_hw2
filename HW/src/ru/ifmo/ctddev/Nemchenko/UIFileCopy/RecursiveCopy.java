@@ -17,6 +17,7 @@ import java.util.function.Consumer;
  */
 public class RecursiveCopy extends SwingWorker<CopyProperties, CopyProperties> implements FileVisitor<Path>, ActionListener {
     private static final int MAX_BUF_SIZE = 1024 * 1024;
+    public static final int DELAY = 1000;
     private byte buf[];
 
     private Path sourcePath;
@@ -38,7 +39,7 @@ public class RecursiveCopy extends SwingWorker<CopyProperties, CopyProperties> i
         this.sourcePath = sourcePath;
         this.destinationPath = destinationPath;
 
-        timer = new Timer(1000, this);
+        timer = new Timer(DELAY, this);
         timer.start();
         execute();
     }

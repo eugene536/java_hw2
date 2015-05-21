@@ -3,8 +3,7 @@ package ru.ifmo.ctddev.Nemchenko.UIFileCopy;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.IOException;
 import java.nio.file.*;
 import java.text.DecimalFormat;
@@ -21,6 +20,7 @@ public class UIFileCopy extends JFrame {
     private static Path destinationPath;
     private GridBagConstraints constraints;
 
+    private static final String TITLE = "File copy utility";
     private static final String AVERAGE_SPEED = "Average speed: ";
     private static final String EXPIRED_TIME = "Expired time: ";
     private static final String REMAINING_TIME = "Remaining time: ";
@@ -41,7 +41,7 @@ public class UIFileCopy extends JFrame {
      * construct this UIFileCopy
      */
     UIFileCopy() {
-        super("File copy utility");
+        super(TITLE);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);  // window will be showed on the center
         getContentPane().setLayout(new GridBagLayout());
@@ -49,27 +49,19 @@ public class UIFileCopy extends JFrame {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException
-                | UnsupportedLookAndFeelException | IllegalAccessException e) {
-            // ignore
+                | UnsupportedLookAndFeelException | IllegalAccessException ignore) {
         }
 
-        createPanel();
-
         constraints = new GridBagConstraints();
+        createPanel();
         createProgress();
 
-        constraints.insets = new Insets(10, 10, 10, 50);
-        constraints.gridwidth = 2;
-        constraints.anchor = GridBagConstraints.CENTER;
-        totalSizeLabel = createLabel("", 0, 0);
-
-        constraints.gridwidth = 1;
-        constraints.anchor = GridBagConstraints.FIRST_LINE_START;
-
-        currentSpeedLabel = createLabel(CURRENT_SPEED, 0, 2);
-        averageSpeedLabel = createLabel(AVERAGE_SPEED, 0, 3);
-        expiredTimeLabel = createLabel(EXPIRED_TIME, 1, 2);
-        remainingTimeLabel = createLabel(REMAINING_TIME, 1, 3);
+        String forGUI = "           ";
+        totalSizeLabel = createLabel(forGUI, 0, 0, 2, GridBagConstraints.CENTER);
+        currentSpeedLabel = createLabel(CURRENT_SPEED, 0, 2, 1, GridBagConstraints.FIRST_LINE_END);
+        averageSpeedLabel = createLabel(AVERAGE_SPEED, 0, 3, 1, GridBagConstraints.FIRST_LINE_END);
+        expiredTimeLabel = createLabel(EXPIRED_TIME, 1, 2, 1, GridBagConstraints.FIRST_LINE_START);
+        remainingTimeLabel = createLabel(REMAINING_TIME, 1, 3, 1, GridBagConstraints.FIRST_LINE_START);
         setLabelsVisibility(false);
 
         createCancelButton();
@@ -83,7 +75,6 @@ public class UIFileCopy extends JFrame {
     }
 
     private void createPanel() {
-        GridBagConstraints constraints = new GridBagConstraints();
         panel = new JPanel(new GridBagLayout());
         constraints = new GridBagConstraints();
         constraints.gridwidth = GridBagConstraints.RELATIVE;
@@ -97,12 +88,24 @@ public class UIFileCopy extends JFrame {
         getContentPane().add(panel, constraints);
     }
 
-    private JLabel createLabel(String text, int gridx, int gridy) {
+    private JLabel createLabel(String text, int gridx, int gridy, int width, int anchor) {
         JLabel label = new JLabel();
+
+        label.setFont(new Font("monospace", Font.PLAIN, 14));
+        FontMetrics fm = label.getFontMetrics(label.getFont());
+        int w = fm.stringWidth(text + "10 h 20 m 20 s");
+        int h = fm.getHeight();
+        label.setMinimumSize(new Dimension(w, h));
+        label.setPreferredSize(new Dimension(w, h));
+
         label.setText(text);
         constraints.fill = GridBagConstraints.NONE;
         constraints.gridx = gridx;
         constraints.gridy = gridy;
+        constraints.anchor = anchor;
+        constraints.insets = new Insets(10, 10, 10, 50);
+        constraints.gridwidth = width;
+        constraints.weightx = 0.5;
         panel.add(label, constraints);
         return label;
     }
@@ -141,7 +144,6 @@ public class UIFileCopy extends JFrame {
     }
 
     private void canceledCopying() {
-        System.out.println("canceled");
         remainingTimeLabel.setText(REMAINING_TIME + "0 s");
         cancel.setText("close");
 
@@ -159,6 +161,11 @@ public class UIFileCopy extends JFrame {
 
         double expiredTime = milliToSeconds(System.currentTimeMillis() - properties.getStartTime());
         expiredTimeLabel.setText(EXPIRED_TIME + getTimeFormat((long) (expiredTime * 1000)));
+
+        TitledBorder centerBorder = BorderFactory.createTitledBorder("Finished");
+        centerBorder.setTitleJustification(TitledBorder.LEFT);
+        centerBorder.setTitleColor(Color.red);
+        panel.setBorder(centerBorder);
     }
 
     private void propertiesHandler(CopyProperties properties) {
@@ -247,9 +254,43 @@ public class UIFileCopy extends JFrame {
         dialog.setVisible(true);
     }
 
+    private static void showError(String message) {
+        SwingUtilities.invokeLater(() -> showErrorDialog(message, null));
+    }
+
+    private static boolean checkSubdirectory(Path destinationPath, Path sourcePath) {
+        if (destinationPath == null || sourcePath == null) {
+            return false;
+        }
+
+        if (destinationPath.compareTo(sourcePath) == 0) {
+            return true;
+        }
+
+        return checkSubdirectory(destinationPath.getParent(), sourcePath);
+    }
+
     public static void main(String[] args) {
+        if (true) {
+            args[0] = "source/new";
+            args[1] = "destination/new";
+
+//            args[0] = "source/2";
+//            args[1] = "destination/2";
+//
+//            args[0] = "source";
+//            args[1] = "destination";
+//
+//            args[0] = "source_error/new";
+//            args[1] = "destination/new";
+//
+//            args[0] = "asdfasdf";
+//            args[1] = "destination";
+
+//            args = null;
+        }
         if (args == null || args.length != 2 || args[0] == null || args[1] == null) {
-            System.out.println("usage: <source location> <destination location>");
+            showError("usage: <source location> <destination location>");
             return;
         }
         sourcePath = null;
@@ -286,25 +327,6 @@ public class UIFileCopy extends JFrame {
         } catch (IOException e) {
             showError("Bad path: [" + e.getMessage() + "]");
         }
-
-
         SwingUtilities.invokeLater(UIFileCopy::new);
     }
-
-    private static void showError(String message) {
-        SwingUtilities.invokeLater(() -> showErrorDialog(message, null));
-    }
-
-    private static boolean checkSubdirectory(Path destinationPath, Path sourcePath) {
-        if (destinationPath == null || sourcePath == null) {
-            return false;
-        }
-
-        if (destinationPath.compareTo(sourcePath) == 0) {
-            return true;
-        }
-
-        return checkSubdirectory(destinationPath.getParent(), sourcePath);
-    }
-
 }
