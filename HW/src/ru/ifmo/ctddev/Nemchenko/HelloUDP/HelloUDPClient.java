@@ -1,18 +1,19 @@
 package ru.ifmo.ctddev.Nemchenko.HelloUDP;
 
 import info.kgeorgiy.java.advanced.hello.HelloClient;
-import info.kgeorgiy.java.advanced.hello.Util;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.io.IOException;
 import java.net.*;
+import java.nio.charset.Charset;
 import java.util.*;
-import java.util.concurrent.TimeoutException;
 
 /**
- * Created by eugene on 2015/05/05.
+ * class for sending requests in parallel threads, see description of {@link #start(String, int, String, int, int)}
  */
 public class HelloUDPClient implements HelloClient {
+    private static final int TIMEOUT = 100;
+    private static final Charset CHARSET = Charset.forName("utf-8");
+
     public static void main(String... args) {
         if (args.length < 5) {
             System.out.println("usage: name/ip of server, port number, prefix, count of threads, count of queries");
@@ -27,9 +28,19 @@ public class HelloUDPClient implements HelloClient {
         new HelloUDPClient().start(host, port, prefix, requests, threads);
     }
 
+    /**
+     * send {@code requests} requests in parallel {@code threads} threads on host {@code host} in port {@code port}
+     * requests are generated like "{@code prefix}n_m",
+     * where n - number of current thread, m - number of current request
+     * @param host server host
+     * @param port target port
+     * @param prefix for generated request
+     * @param requests count of requests which will be sent on server host
+     * @param threads count of threads which will be send a requests on server host
+     */
     @Override
     public void start(String host, int port, String prefix, int requests, int threads) {
-        InetAddress serverInet = null;
+        InetAddress serverInet;
         try {
             serverInet = InetAddress.getByName(host);
         } catch (UnknownHostException e) {
@@ -37,7 +48,7 @@ public class HelloUDPClient implements HelloClient {
             return;
         }
 
-        ArrayList<Thread> threadsList = new ArrayList<Thread>();
+        ArrayList<Thread> threadsList = new ArrayList<>();
         for (int i = 0; i < threads; i++) {
             threadsList.add(new Thread(new SendTask(i, port, serverInet, requests, prefix)));
             threadsList.get(threadsList.size() - 1).start();
@@ -76,21 +87,23 @@ public class HelloUDPClient implements HelloClient {
                     try (DatagramSocket clientSocket = new DatagramSocket()) {
                         DatagramPacket packet = new DatagramPacket(request.getBytes(), request.length(), serverInet, port);
                         clientSocket.send(packet);
-                        clientSocket.setSoTimeout(10);
+                        clientSocket.setSoTimeout(TIMEOUT);
 
-                        byte buf[] = new byte[request.length() + 50];
+                        byte buf[] = new byte[request.length() + 10];
                         DatagramPacket receivePacket = new DatagramPacket(buf, buf.length);
                         clientSocket.receive(receivePacket);
 
-                        String response = new String(receivePacket.getData(), receivePacket.getOffset(), receivePacket.getLength());
+                        String response = new String(receivePacket.getData(), receivePacket.getOffset(), receivePacket.getLength(), CHARSET);
                         if (("Hello, " + request).equals(response)) {
                             i++;
+//                            System.out.println("client: request: " + request);
+//                            System.out.println("client: response: " + response);
                         }
                     }
                 } catch (SocketTimeoutException e) {
                     // ignoring
                 } catch (IOException e) {
-                    // ignoring
+                    e.printStackTrace();
                 }
             }
         }

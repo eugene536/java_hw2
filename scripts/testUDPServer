@@ -1,0 +1,13 @@
+#!/bin/bash
+PROJECT=HelloUDP
+SOLUTION=HelloUDPServer
+MY_CLASS=ru.ifmo.ctddev.Nemchenko.${PROJECT}.${SOLUTION}
+PROJECT_PATH=../HW/out/production/HW/
+LOG_FILE=log
+
+PACKAGE_TEST=info.kgeorgiy.java.advanced.hello.Tester
+LEVEL_TEST=server
+ARTIFACTS=../java-advanced-2015/artifacts/HelloUDPTest.jar
+LIBS=../java-advanced-2015/lib/*
+java -cp "${ARTIFACTS}:${LIBS}:${PROJECT_PATH}" ${PACKAGE_TEST} ${LEVEL_TEST} ${MY_CLASS} $@ 
+#2> ${LOG_FILE}
