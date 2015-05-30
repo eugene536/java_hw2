@@ -6,9 +6,10 @@ import java.io.IOException;
 import java.net.*;
 import java.nio.charset.Charset;
 import java.util.*;
+import java.util.concurrent.*;
 
 /**
- * class for sending requests in parallel threads, see description of {@link #start(String, int, String, int, int)}
+ * class for sending parallel requests in threads, see description of {@link #start(String, int, String, int, int)}
  */
 public class HelloUDPClient implements HelloClient {
     private static final int TIMEOUT = 100;
@@ -29,14 +30,15 @@ public class HelloUDPClient implements HelloClient {
     }
 
     /**
-     * send {@code requests} requests in parallel {@code threads} threads on host {@code host} in port {@code port}
+     * send {@code requests} parallel requests in {@code threads} threads on host {@code host} in port {@code port}
      * requests are generated like "{@code prefix}n_m",
      * where n - number of current thread, m - number of current request
-     * @param host server host
-     * @param port target port
-     * @param prefix for generated request
+     *
+     * @param host     server host
+     * @param port     target port
+     * @param prefix   for generated request
      * @param requests count of requests which will be sent on server host
-     * @param threads count of threads which will be send a requests on server host
+     * @param threads  count of threads which will be send a requests on server host
      */
     @Override
     public void start(String host, int port, String prefix, int requests, int threads) {
@@ -48,15 +50,16 @@ public class HelloUDPClient implements HelloClient {
             return;
         }
 
-        ArrayList<Thread> threadsList = new ArrayList<>();
+        ArrayList<ExecutorService> threadsList = new ArrayList<>();
         for (int i = 0; i < threads; i++) {
-            threadsList.add(new Thread(new SendTask(i, port, serverInet, requests, prefix)));
-            threadsList.get(threadsList.size() - 1).start();
+            threadsList.add(Executors.newFixedThreadPool(threads));
+            threadsList.get(threadsList.size() - 1).execute(new Thread(new SendTask(i, port, serverInet, requests, prefix)));
         }
 
         try {
-            for (Thread thread : threadsList) {
-                thread.join();
+            for (ExecutorService executor : threadsList) {
+                executor.shutdown();
+                executor.awaitTermination(10, TimeUnit.SECONDS);
             }
         } catch (InterruptedException e) {
             // ignore

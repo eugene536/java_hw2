@@ -227,7 +227,7 @@ public class UIFileCopy extends JFrame {
         properties.setLastCopiedBytes(0);
     }
 
-    private static void showErrorDialog(String message, JFrame frame) {
+    public static void showErrorDialog(String message, JFrame frame) {
         JOptionPane optionPane = new JOptionPane(message, JOptionPane.ERROR_MESSAGE);
         if (dialog != null && dialog.isVisible()) return;
         dialog = new JDialog(frame, "Click a button", true);
@@ -272,14 +272,17 @@ public class UIFileCopy extends JFrame {
 
     public static void main(String[] args) {
         if (true) {
-            args[0] = "source/new";
-            args[1] = "destination/new";
+//            args[0] = "/dev/urandom";
+//            args[1] = "destination/new";
+
+//            args[0] = "source/new";
+//            args[1] = "destination/new";
 
 //            args[0] = "source/2";
 //            args[1] = "destination/2";
 //
-//            args[0] = "source";
-//            args[1] = "destination";
+            args[0] = "source";
+            args[1] = "destination";
 //
 //            args[0] = "source_error/new";
 //            args[1] = "destination/new";
@@ -314,8 +317,7 @@ public class UIFileCopy extends JFrame {
         } catch (InvalidPathException ex) {
             showError("Bad path: [" + ex.getInput() + "]");
             return;
-        } catch (IOException e) {
-            //ignore
+        } catch (IOException ignore) {
         }
 
         if (Files.isDirectory(sourcePath)) {
@@ -323,7 +325,9 @@ public class UIFileCopy extends JFrame {
         }
 
         try {
-            Files.createDirectories(destinationPath.getParent());
+            if (destinationPath.getParent() != null) {
+                Files.createDirectories(destinationPath.getParent());
+            }
         } catch (IOException e) {
             showError("Bad path: [" + e.getMessage() + "]");
         }

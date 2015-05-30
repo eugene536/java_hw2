@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
@@ -134,7 +135,7 @@ public class RecursiveCopy extends SwingWorker<CopyProperties, CopyProperties> i
     }
 
     /**
-     * Invoked for a file and do copy of it with update GUI invoking {@code handleProperties}
+     * Invoked for a file and do a copy of it with update GUI invoking {@code handleProperties}
      *
      * @param file target file which will be copied
      * @param attrs the file's basic attributes

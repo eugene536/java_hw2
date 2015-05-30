@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Class for running servers which listen on port passed in command line arguments
@@ -14,7 +16,7 @@ import java.util.ArrayList;
 public class HelloUDPServer implements HelloServer {
     private static final int BUF_SIZE = 100;
     private static final int TIMEOUT = 10;
-    private static ArrayList<Thread> workingThreads = new ArrayList<>();
+    private static ArrayList<ExecutorService> workingThreads = new ArrayList<>();
     private static ArrayList<DatagramSocket> serverSockets = new ArrayList<>();
     private static final Charset CHARSET = Charset.forName("utf-8");
 
@@ -30,17 +32,18 @@ public class HelloUDPServer implements HelloServer {
 
     /**
      * create server on port {@code port} and receive requests in {@code threads} parallel running threads.
-     * @param port target port
+     *
+     * @param port    target port
      * @param threads count of threads, which will be used for receiving requests
      */
     @Override
     public void start(int port, int threads) {
         try {
             DatagramSocket serverSocket = new DatagramSocket(port);
+            workingThreads.add(Executors.newFixedThreadPool(threads));
 
             for (int i = 0; i < threads; i++) {
-                workingThreads.add(new Thread(new ReceiveTask(serverSocket)));
-                workingThreads.get(workingThreads.size() - 1).start();
+                workingThreads.get(workingThreads.size() - 1).execute(new ReceiveTask(serverSocket));
             }
 
         } catch (SocketException e) { // TBD
@@ -53,19 +56,8 @@ public class HelloUDPServer implements HelloServer {
      */
     @Override
     public void close() {
-        for (Thread thread : workingThreads) {
-            thread.interrupt();
-        }
-        for (Thread thread : workingThreads) {
-            try {
-                thread.join();
-            } catch (InterruptedException ignore) {
-            }
-        }
-
-        for (DatagramSocket serverSocket: serverSockets) {
-            serverSocket.close();
-        }
+        workingThreads.forEach(java.util.concurrent.ExecutorService::shutdownNow);
+        serverSockets.forEach(java.net.DatagramSocket::close);
     }
 
     private class ReceiveTask implements Runnable {
